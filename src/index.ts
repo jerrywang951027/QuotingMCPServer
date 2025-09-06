@@ -24,6 +24,7 @@ import { READ_APEX_TRIGGER, handleReadApexTrigger, ReadApexTriggerArgs } from ".
 import { WRITE_APEX_TRIGGER, handleWriteApexTrigger, WriteApexTriggerArgs } from "./tools/writeApexTrigger.js";
 import { EXECUTE_ANONYMOUS, handleExecuteAnonymous, ExecuteAnonymousArgs } from "./tools/executeAnonymous.js";
 import { MANAGE_DEBUG_LOGS, handleManageDebugLogs, ManageDebugLogsArgs } from "./tools/manageDebugLogs.js";
+import { LIST_CUSTOMERS, handleListCustomers, ListCustomersArgs } from "./tools/listCustomers.js";
 
 dotenv.config();
 
@@ -56,7 +57,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     READ_APEX_TRIGGER,
     WRITE_APEX_TRIGGER,
     EXECUTE_ANONYMOUS,
-    MANAGE_DEBUG_LOGS
+    MANAGE_DEBUG_LOGS,
+    LIST_CUSTOMERS
   ],
 }));
 
@@ -316,6 +318,20 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         };
 
         return await handleManageDebugLogs(conn, validatedArgs);
+      }
+
+      case "salesforce_list_customers": {
+        const listCustomersArgs = args as Record<string, unknown>;
+        if (!listCustomersArgs.userId) {
+          throw new Error('userId is required for listing customers');
+        }
+        
+        // Type check and conversion
+        const validatedArgs: ListCustomersArgs = {
+          userId: listCustomersArgs.userId as string
+        };
+
+        return await handleListCustomers(conn, validatedArgs);
       }
 
       default:

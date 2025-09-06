@@ -140,6 +140,14 @@ Manage debug logs for Salesforce users:
 * Configure log levels (NONE, ERROR, WARN, INFO, DEBUG, FINE, FINER, FINEST)
 * Example: "Enable debug logs for user@example.com" or "Retrieve recent logs for an admin user"
 
+### salesforce_list_customers
+Invoke custom Salesforce REST endpoint to list customer accounts:
+* Call Vlocity CMT integration procedure endpoint
+* Retrieve customer accounts for a specific user ID
+* Support for current user or specific user ID
+* Returns formatted list of Account records with details
+* Example: "List customers for user 005000000000000AAA" or "List my customers"
+
 ## Setup
 
 ### Salesforce Authentication
@@ -290,6 +298,14 @@ Examples with Field Level Security:
 "Retrieve recent logs for an admin user"
 "Disable debug logs for a specific user"
 "Configure log level to DEBUG for a user"
+```
+
+### Listing Customers
+```
+"List customers for user 005000000000000AAA"
+"List my customers"
+"Show me all customer accounts for the current user"
+"Get customer list for user ID 005000000000000BBB"
 ```
 
 ## Development
