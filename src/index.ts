@@ -26,7 +26,12 @@ import { EXECUTE_ANONYMOUS, handleExecuteAnonymous, ExecuteAnonymousArgs } from 
 import { MANAGE_DEBUG_LOGS, handleManageDebugLogs, ManageDebugLogsArgs } from "./tools/manageDebugLogs.js";
 import { LIST_CUSTOMERS, handleListCustomers, ListCustomersArgs } from "./tools/listCustomers.js";
 
+// Load environment variables silently to avoid interfering with MCP protocol
+// Temporarily suppress stdout to prevent dotenv logging from interfering with MCP
+const originalStdout = process.stdout.write;
+process.stdout.write = () => true;
 dotenv.config();
+process.stdout.write = originalStdout;
 
 const server = new Server(
   {
